@@ -9,6 +9,9 @@ import { config } from "../package.json";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
+import { it } from "node:test";
+import * as ParseChapter from  "./parsechapter"
+import { openAsBlob } from "node:fs";
 
 async function onStartup() {
   await Promise.all([
@@ -28,6 +31,8 @@ async function onStartup() {
 async function onMainWindowLoad(win: Window): Promise<void> {
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
+
+  await ParseChapter.getChapterData("2932321");
 
   const popupWin = new ztoolkit.ProgressWindow(config.addonName, {
     closeOnClick: true,
@@ -109,6 +114,11 @@ async function onNotify(
   extraData: { [key: string]: any },
 ) {
   // You can add your code to the corresponding notify type
+  if(event == "add"){
+
+    onAdd(ids[0] as number);
+  }
+
   ztoolkit.log("notify", event, type, ids, extraData);
   if (
     event == "select" &&
@@ -189,3 +199,62 @@ export default {
   onShortcuts,
   onDialogEvents,
 };
+
+
+function onAdd(id: number){
+  ztoolkit.log("item added - id = " + id)
+
+  const item = Zotero.Items.get(id)
+  const title = item.getDisplayTitle()
+
+  ztoolkit.log(title)
+
+  if(title == "RI OPAC"){
+    const chapterID = id - 1 // the chapter's id is one less than the attachment's id
+    const chapter = Zotero.Items.get(chapterID)
+
+
+    if(chapter.itemType == "bookSection"){
+      ztoolkit.log("chapter: " + chapter.getDisplayTitle())
+      processChapter(chapter, item.getField("url") as string)
+    } else {
+      ztoolkit.log("not a chapter")
+    }
+    
+
+  }
+}
+
+async function processChapter(chapter: Zotero.Item, url: string){
+  ztoolkit.log("parsing chapter")
+  
+  const OPACID = getPKValue(url);
+
+  const data = await ParseChapter.getChapterData(OPACID)
+  ztoolkit.log("recieved item:")
+  ztoolkit.log(data)
+
+  ztoolkit.log(Object.keys(data))
+
+  Object.keys(data).forEach((field, idx, arr) => {
+    if(field == "editors"){
+      ztoolkit.log("trying to add editors")
+      const authors = chapter.getCreators()
+      const creators = (data["editors"] as Zotero.Item.Creator[]).concat(authors)
+      chapter.setCreators(creators)
+    } else {
+      ztoolkit.log("trying to add " + field)
+      chapter.setField(field as Zotero.Item.ItemField, data[field] as string)
+    }
+  })
+
+
+  ztoolkit.log("finished updating fields, now saving") 
+  chapter.saveTx()
+  ztoolkit.log("saved")
+}
+
+function getPKValue(url: string){
+  return url.match(/pk=(\d+)/)![1]; //no idea how to do null checks :)
+}
+
