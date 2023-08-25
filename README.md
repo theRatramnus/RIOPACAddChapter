@@ -11,4 +11,4 @@ You can download this plugin for free on the [releases page](https://github.com/
 If you should encounter any bugs, feel free open an issue. Any other forms of contribution are welcome, too - of course.
 
 ## Credits
-This plugin wouldnt have been possible without the [Using Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template). Thank you so much, @windingwind!
+This plugin wouldnt have been possible without the [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template). Thank you so much, @windingwind!
