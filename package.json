@@ -1,10 +1,10 @@
 {
-  "name": "zotero-addon-template",
+  "name": "riopac-add-chapters",
   "version": "1.0.0",
-  "description": "Zotero Addon Template",
+  "description": "Add full information for chapters from RI OPAC.",
   "config": {
-    "addonName": "Zotero Addon Template",
-    "addonID": "addontemplate@euclpts.com",
+    "addonName": "RIOPACAddChapter",
+    "addonID": "RIOPACAddChapter@noidea.com",
     "addonRef": "addontemplate",
     "addonInstance": "AddonTemplate",
     "prefsPrefix": "extensions.zotero.addontemplate",
