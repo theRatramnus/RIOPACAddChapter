@@ -56,13 +56,13 @@ export class BasicExampleFactory {
 
   @example
   static exampleNotifierCallback() {
-    new ztoolkit.ProgressWindow(config.addonName)
+    /*new ztoolkit.ProgressWindow(config.addonName)
       .createLine({
         text: "Open Tab Detected!",
         type: "success",
         progress: 100,
       })
-      .show();
+      .show();*/
   }
 
   @example

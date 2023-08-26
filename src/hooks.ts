@@ -13,6 +13,8 @@ import { createZToolkit } from "./utils/ztoolkit";
 import { it } from "node:test";
 import * as ParseChapter from  "./parsechapter"
 import { openAsBlob } from "node:fs";
+import * as Typography from "./typgraphy"
+import { first } from "cheerio/lib/api/traversing";
 
 async function onStartup() {
   await Promise.all([
@@ -109,8 +111,13 @@ function onAdd(id: number){
     } else {
       ztoolkit.log("not a chapter")
     }
-    
 
+    const isFixingTypography = getPref("enhancedTypography") as boolean
+
+    if(isFixingTypography){
+      item.setField("title", Typography.fixTitle(title))
+      item.saveTx()
+    }
   }
 }
 
@@ -125,17 +132,40 @@ async function processChapter(chapter: Zotero.Item, url: string){
 
   ztoolkit.log(Object.keys(data))
 
+  const isFixingTypography = getPref("enhancedTypography") as boolean
+
   Object.keys(data).forEach((field, idx, arr) => {
     if(field == "editors"){
       ztoolkit.log("trying to add editors")
-      const authors = chapter.getCreators()
-      const creators = (data["editors"] as Zotero.Item.Creator[]).concat(authors)
+      const authors = chapter.getCreators().map((creator) => {
+        if(isFixingTypography){
+          return {
+            firstName: Typography.removeParenthesesContent(creator.firstName!),
+            lastName: creator.lastName,
+            creatorType: "author"
+         }
+        }
+        return creator
+      })
+      const editors = (data["editors"] as Zotero.Item.Creator[]).map((creator) => {
+        if(isFixingTypography){
+          return {
+            firstName: Typography.removeParenthesesContent(creator.firstName!),
+            lastName: creator.lastName,
+            creatorType: "editor"
+         }
+        }
+        return creator
+      })
+      const creators = authors.concat(editors)
       chapter.setCreators(creators)
     } else {
       ztoolkit.log("trying to add " + field)
       chapter.setField(field as Zotero.Item.ItemField, data[field] as string)
     }
   })
+
+
 
 
   ztoolkit.log("finished updating fields, now saving") 

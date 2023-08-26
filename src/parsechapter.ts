@@ -1,8 +1,5 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-import {XMLParser} from 'fast-xml-parser';
-import { constants } from 'node:buffer';
-import { it } from 'node:test';
+import * as Typography from "./typgraphy"
+import { getPref } from "./utils/prefs";
 
 
 const mergeDicts = (x: Record<string, any>, y: Record<string, any>): Record<string, any> => {
@@ -81,10 +78,13 @@ function extractBookInfo(xmlDocument: Document): Record<string, any> {
         return {firstName: split[1], lastName: split[0], creatorType: "editor"}
      })
 
-
+    function fixTitle(tag: string, code: string): string{
+        const fetchedContent = findContent(xmlDocument, tag, code) ?? ""
+        return getPref("enhancedTypography") as boolean ? Typography.fixTitle(fetchedContent) : fetchedContent
+    }
 
     return {
-        "bookTitle": findContent(xmlDocument, '245', 'a') ?? "",
+        "bookTitle": fixTitle('245', 'a'),
         "place": findContent(xmlDocument,'264', 'a').trim() ?? "",
         "series": findContent(xmlDocument, '490', 'a').split(" / ")[0].trim() ?? "",
         "volume": findContent(xmlDocument, '490', 'a').split(" / ")[1]?.trim() ?? "",
