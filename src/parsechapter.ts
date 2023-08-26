@@ -62,10 +62,8 @@ function findContent(doc: XMLDocument, tag: string, code: string): string {
     return '';
 }
 
-function extractChapterInfo(xmlDocument: Document): Record<string, any> {
-    return {
-        "bookTitle": findContent(xmlDocument, '773', 't').trim(),
-    };
+function extractChapterInfo(xmlDocument: Document): string {
+    return  findContent(xmlDocument, '773', 't').trim()
 }
 
 
@@ -86,6 +84,7 @@ function extractBookInfo(xmlDocument: Document): Record<string, any> {
 
 
     return {
+        "bookTitle": findContent(xmlDocument, '245', 'a') ?? "",
         "place": findContent(xmlDocument,'264', 'a').trim() ?? "",
         "series": findContent(xmlDocument, '490', 'a').split(" / ")[0].trim() ?? "",
         "volume": findContent(xmlDocument, '490', 'a').split(" / ")[1]?.trim() ?? "",
@@ -107,14 +106,14 @@ export async function getChapterData(opacid: string) : Promise<Record<string, an
     const chapterInfo = extractChapterInfo(chapterRoot as XMLDocument);
     ztoolkit.log(chapterInfo);
 
-    const bookLink = await fetchBookLink(chapterInfo["bookTitle"])
+    const bookLink = await fetchBookLink(chapterInfo)
     ztoolkit.log(bookLink)
     const bookRoot = await fetchItemInfo(bookLink)
     ztoolkit.log(bookRoot)
     const bookInfo = extractBookInfo(bookRoot as XMLDocument)
     ztoolkit.log(bookInfo)
 
-    const item = mergeDicts(chapterInfo, bookInfo);
+    const item = bookInfo
     ztoolkit.log("sent item:")
     ztoolkit.log(item)
 
