@@ -6,6 +6,7 @@ import {
   UIExampleFactory,
 } from "./modules/examples";
 import { config } from "../package.json";
+import { getPref } from "./utils/prefs";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
@@ -100,6 +101,11 @@ function onAdd(id: number){
     if(chapter.itemType == "bookSection"){
       ztoolkit.log("chapter: " + chapter.getDisplayTitle())
       processChapter(chapter, item.getField("url") as string)
+      if(getPref("deleteAttachments") as boolean){
+        ztoolkit.log("deleting attachments")
+        item.deleted = true
+        item.saveTx()
+      }
     } else {
       ztoolkit.log("not a chapter")
     }

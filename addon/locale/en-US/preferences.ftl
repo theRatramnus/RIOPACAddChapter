@@ -1,4 +1,4 @@
-pref-title = Addon Template Example
-pref-enable =
-    .label = Enable
+pref-title = RIOPACAddChapter
+pref-attachments =
+    .label = Delete attachments after download
 pref-help = { $name } Build { $version } { $time }
