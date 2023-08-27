@@ -15,8 +15,8 @@ function replaceSpacesAroundHyphenWithEnDash(input: string): string {
 }
 
 function replaceLastEWithSupE(input: string): string {
-    const regex = /([\s(][IVX][A-Z]*)e\s/;
-    const replaced = input.replace(regex, '$1<sup>e</sup> ');
+    const regex = /([\s(-][IVX][A-Z]*)e([\s-)])/;
+    const replaced = input.replace(regex, '$1<sup>e</sup>$2');
 
     return replaced;
 }
@@ -43,5 +43,5 @@ export function removeParenthesesContent(input: string): string {
 }
 
 export function fixTitle(input: string): string{
-    return replaceSpacesAroundHyphenWithEnDash(replaceDashesWithEnDash(replaceLastEWithSupE(replaceSemicolonWithPeriod(removeColonAfterQuestionmark(input)))))
+    return replaceSpacesAroundHyphenWithEnDash(replaceDashesWithEnDash(replaceLastEWithSupE(replaceLastEWithSupE((replaceSemicolonWithPeriod(removeColonAfterQuestionmark(input)))))))
 }
