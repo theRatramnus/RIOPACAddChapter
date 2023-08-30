@@ -1,12 +1,13 @@
 import * as Typography from "./typgraphy"
 import { getPref } from "./utils/prefs";
+import { fetchPublisher } from "./fetchpublisher";
 
 
 const mergeDicts = (x: Record<string, any>, y: Record<string, any>): Record<string, any> => {
     return { ...x, ...y };
 };
 
-const replaceSpacesWithPlus = (inputString: string): string => {
+export const replaceSpacesWithPlus = (inputString: string): string => {
     return inputString.replace(/ /g, "+");
 };
 
@@ -67,7 +68,7 @@ function extractChapterInfo(xmlDocument: Document): string {
 
 // Extract book info and the rest of the code remains largely similar to `extractChapterInfo`.
 
-function extractBookInfo(xmlDocument: Document): Record<string, any> {
+async function extractBookInfo(xmlDocument: Document): Promise<Record<string, any>> {
 
 
     const editorsString = findContent(xmlDocument, '700', 'a')
@@ -89,7 +90,8 @@ function extractBookInfo(xmlDocument: Document): Record<string, any> {
         "series": findContent(xmlDocument, '490', 'a').split(" / ")[0].trim() ?? "",
         "volume": findContent(xmlDocument, '490', 'a').split(" / ")[1]?.trim() ?? "",
         "url": findContent(xmlDocument, '502', 'a').trim() ?? "",
-        "editors": creators ?? ""
+        "editors": creators ?? "",
+        "publisher" : await fetchPublisher(findContent(xmlDocument, '245', 'a'))
     };
 }
 
@@ -110,7 +112,7 @@ export async function getChapterData(opacid: string) : Promise<Record<string, an
     ztoolkit.log(bookLink)
     const bookRoot = await fetchItemInfo(bookLink)
     ztoolkit.log(bookRoot)
-    const bookInfo = extractBookInfo(bookRoot as XMLDocument)
+    const bookInfo = await extractBookInfo(bookRoot as XMLDocument)
     ztoolkit.log(bookInfo)
 
     const item = bookInfo

@@ -6,6 +6,7 @@
   onload="Zotero.__addonInstance__.hooks.onPrefsEvent('load', {window})"
 >
   <groupbox>
+    <vbox>
     <label><html:h2 data-l10n-id="pref-attachments"></html:h2></label>
     <checkbox
       id="zotero-prefpane-__addonRef__-enable"
@@ -13,7 +14,6 @@
       data-l10n-id="pref-attachments"
     />
     <label><html:h2 data-l10n-id="pref-typography"></html:h2></label>
-    <vbox>
       <checkbox
       id="zotero-prefpane-__addonRef__-enable"
       preference="extensions.zotero.__addonRef__.enhancedTypography"
@@ -22,6 +22,17 @@
     <html:label
     data-l10n-id = "pref-typography-tooltip"
     ></html:label>
+    <hbox>
+      <html:label
+        for="zotero-prefpane-__addonRef__-input"
+        data-l10n-id="pref-input"
+      ></html:label>
+      <html:input
+        type="text"
+        id="zotero-prefpane-__addonRef__-input"
+        preference="extensions.zotero.__addonRef__.input"
+      ></html:input>
+    </hbox>
     </vbox>
   </groupbox>
 </vbox>

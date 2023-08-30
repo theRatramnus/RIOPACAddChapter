@@ -6,6 +6,7 @@ import {
   UIExampleFactory,
 } from "./modules/examples";
 import { config } from "../package.json";
+import { fetchPublisher } from "./fetchpublisher";
 import { getPref } from "./utils/prefs";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
@@ -122,11 +123,16 @@ function onAdd(id: number){
       item.setField("title", Typography.fixTitle(item.getDisplayTitle()))
       item.saveTx()
     }
-
-
+  
 
   }
+
 }
+
+/*async function setPublisher(item: Zotero.Item) {
+  const publisher = await fetchPublisher(item.getDisplayTitle())
+  item.setField("publisher", publisher)
+}*/
 
 async function processChapter(chapter: Zotero.Item, url: string){
   ztoolkit.log("parsing chapter")
@@ -139,8 +145,7 @@ async function processChapter(chapter: Zotero.Item, url: string){
 
   ztoolkit.log(Object.keys(data))
 
-  const isFixingTypography = getPref("enhancedTypography") as boolean
-
+  //set fields
   Object.keys(data).forEach((field, idx, arr) => {
     if(field == "editors"){
       ztoolkit.log("trying to add editors")
@@ -156,7 +161,7 @@ async function processChapter(chapter: Zotero.Item, url: string){
 
 
 
-
+  //save
   ztoolkit.log("finished updating fields, now saving") 
   chapter.saveTx()
   ztoolkit.log("saved")
