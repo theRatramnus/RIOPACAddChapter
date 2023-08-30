@@ -19,3 +19,5 @@ If you should encounter any bugs, feel free open an issue. Any other forms of co
 
 ## Credits
 This plugin wouldn't have been possible without the [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template). Thank you so much, @windingwind!
+####
+Also thank you for the publisher fetching feature request, @jbwaagmeester!
