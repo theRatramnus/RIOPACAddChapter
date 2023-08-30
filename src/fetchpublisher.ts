@@ -1,5 +1,5 @@
 import { getPref } from "./utils/prefs";
-import { replaceSpacesWithPlus } from "./parsechapter";
+import { config } from "../package.json";
 function extractFirstPublisher(jsonString: string): string | null {
     try {
       // Parse the JSON string into an object
@@ -63,6 +63,8 @@ function extractSelfLink(jsonString: string): string | null {
 
 
 export async function fetchPublisher(bookTitle: string): Promise<string | null>{
+    
+    if(getPref("fetchPublisher")){
     const link = await fetchSelfLink(bookTitle)
     const request = await Zotero.HTTP.request('GET', link)
     ztoolkit.log(request)
@@ -74,4 +76,7 @@ export async function fetchPublisher(bookTitle: string): Promise<string | null>{
     const publisher = extractFirstPublisher(request.response as string) ?? ""
     ztoolkit.log(publisher)
     return publisher
+    }
+    ztoolkit.log("publisher fetching not enabled")
+    return ""
 }

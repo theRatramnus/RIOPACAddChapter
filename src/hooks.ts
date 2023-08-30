@@ -108,6 +108,9 @@ function onAdd(id: number){
       processChapter(item, attachment.getField("url") as string)
     } else {
       ztoolkit.log("not a chapter")
+      if(item.itemType == "book"){
+        setPublisher(item)
+      }
     }
 
     if(getPref("deleteAttachments") as boolean){
@@ -129,10 +132,10 @@ function onAdd(id: number){
 
 }
 
-/*async function setPublisher(item: Zotero.Item) {
+async function setPublisher(item: Zotero.Item) {
   const publisher = await fetchPublisher(item.getDisplayTitle())
-  item.setField("publisher", publisher)
-}*/
+  item.setField("publisher", publisher ?? "")
+}
 
 async function processChapter(chapter: Zotero.Item, url: string){
   ztoolkit.log("parsing chapter")
