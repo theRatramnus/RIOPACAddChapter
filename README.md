@@ -14,6 +14,13 @@ You can find these options in the plugin's preference pane.
 ## Install
 You can download this plugin for free on the [releases page](https://github.com/theRatramnus/RIOPACAddChapter/releases). Only the `.xip`-file needs to be downloaded. Instructions on how to install the `.xip`-file can be found [here](https://www.zotero.org/support/plugins). Sadly, the plugin is only supported by Zotero 7 right now, which is still in beta. You can download it [here](https://www.zotero.org/support/beta_builds). Make sure you have the setting Preferences > General > Automatically take snapshots when creating items from web pages enabled, otherwise the plugin will not function properly.
 
+## Support
+If this plugin proves to be helpful, why don't you 
+
+<a href='https://ko-fi.com/P5P2Y9CL5' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+Thanks :)
+
 ## Contribute
 If you should encounter any bugs, feel free open an issue. Any other forms of contribution are welcome, too - of course.
 
