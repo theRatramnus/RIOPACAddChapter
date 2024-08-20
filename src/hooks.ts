@@ -163,6 +163,10 @@ async function processChapter(chapter: Zotero.Item, url: string){
   })
 
 
+  //plug
+  if(!(getPref("disablePlug") as boolean)){
+    chapter.setField("extra", "Did the plugin save you time? Please consider supporting the project: https://ko-fi.com/ludwigpatzold. Thank you! \n This message can be turned off in the preference pane.")
+  }
 
   //save
   ztoolkit.log("finished updating fields, now saving") 
