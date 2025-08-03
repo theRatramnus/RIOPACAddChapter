@@ -15,7 +15,6 @@ import { it } from "node:test";
 import * as ParseChapter from  "./parsechapter"
 import { openAsBlob } from "node:fs";
 import * as Typography from "./typgraphy"
-import { first } from "cheerio/lib/api/traversing";
 
 async function onStartup() {
   await Promise.all([
@@ -92,11 +91,14 @@ function onAdd(id: number){
   ztoolkit.log("item added - id = " + id)
 
   const attachment = Zotero.Items.get(id)
-  const title = attachment.getDisplayTitle()
+  const attachmentLink = attachment.getField("url") as string
 
-  ztoolkit.log(title)
 
-  if(title == "RI OPAC"){
+
+
+  ztoolkit.log(attachmentLink)
+
+  if(attachmentLink.includes("/opac.regesta-imperii")){
     const chapterID = id - 1 // the chapter's id is one less than the attachment's id
     const item = Zotero.Items.get(chapterID)
 
@@ -105,7 +107,7 @@ function onAdd(id: number){
 
     if(item.itemType == "bookSection"){
       ztoolkit.log("chapter: " + item.getDisplayTitle())
-      processChapter(item, attachment.getField("url") as string)
+      processChapter(item, attachmentLink)
     } else {
       ztoolkit.log("not a chapter")
       if(item.itemType == "book"){

@@ -66,7 +66,7 @@ export async function fetchPublisher(bookTitle: string): Promise<string | null>{
     
     if(getPref("fetchPublisher")){
     const link = await fetchSelfLink(bookTitle)
-    const request = await Zotero.HTTP.request('GET', link)
+    const request = await Zotero.HTTP.request('GET', link!)
     ztoolkit.log(request)
     if (request.status !== 200) {
     return 'Failed to fetch data from the link';
