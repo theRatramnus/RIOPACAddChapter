@@ -47,7 +47,7 @@
     "jsdom": "^24.0.0",
     "xml2js": "^0.6.2",
     "xml2ts": "^0.6.3",
-    "zotero-plugin-toolkit": "^2.2.2"
+    "zotero-plugin-toolkit": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.2",
