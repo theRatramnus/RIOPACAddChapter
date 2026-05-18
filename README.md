@@ -1,4 +1,8 @@
 # RIOPACAddChapter
+
+> [!IMPORTANT]
+> This extension isn't working right now! Use [this one](https://github.com/theRatramnus/riopac-add-chapter-chrome) instead!
+
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 ## Use case
 Zotero plugin that eliminates the tedious task of adding the book information separately when adding a chapter from the RI OPAC.
