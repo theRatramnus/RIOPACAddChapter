@@ -1,7 +1,14 @@
-# RIOPACAddChapter
+# RIOPACAddChapter - DEPRECATED! Alternative exists, read below :)
 
-> [!NOTE]
-> Update for Zotero v10 coming soon!
+> [!Important]
+> RI Opac is no longer reachable through headless browsers. This means that Zotero cannot request the additional information needed on its own.
+> The alternative is to use your browser to load the information needed and add the items to Zotero manually.
+>
+> This is what my Chrome extension (https://github.com/theRatramnus/riopac-add-chapter-chrome) does.
+> As an added bonus this allows for a better user experience, you can now add multiple titles without ever leaving your search page :)
+>
+> <img width="942" height="517" alt="Bildschirmfoto 2026-10-31 um 18 32 16" src="https://github.com/user-attachments/assets/6231097e-a020-4c81-9a31-3f7fc9c06ba8" />
+
 
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 ## Use case
